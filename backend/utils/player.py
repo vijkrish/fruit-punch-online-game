@@ -25,3 +25,13 @@ class Player:
 
     def __str__(self):
         return f"Player(name={self.name}, is_turn={self.is_turn}, pile_size={len(self.pile_of_cards)})"
+
+
+def initialize_players(num_players, cards: List[Card]):
+    """Initialize the players and distributes the given number of cards."""
+    players = []
+    for i in range(num_players):
+        player = Player(f"Player {i+1}")
+        player.collect_cards(cards[i::num_players])
+        players.append(player)
+    return players
