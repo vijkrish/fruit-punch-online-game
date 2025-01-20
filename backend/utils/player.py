@@ -1,6 +1,6 @@
 from typing import List
 
-from initialize_cards import Card
+from card import Card
 
 
 class Player:

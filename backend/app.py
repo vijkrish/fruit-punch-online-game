@@ -1,6 +1,6 @@
 from typing import List
 
-from backend.utils.initialize_cards import Card, setup_game
+from backend.utils.card import Card, setup_game
 from backend.utils.player import initialize_players, Player
 from flask import Flask, jsonify
 
