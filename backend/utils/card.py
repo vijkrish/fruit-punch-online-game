@@ -27,5 +27,5 @@ def setup_game():
     random.shuffle(cards)
     return cards
 
-game_cards = setup_game()
+#game_cards = setup_game()
 #print(game_cards)
