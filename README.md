@@ -1,4 +1,5 @@
 # Fruit Punch Online Multiplayer Game
+------------------------------------
 ## Overview
 Fruit Punch is a speed action game inspired by Halli Galli, where players watch for sets of exactly five fruit. The game requires quick reflexes and attention to detail.
 
