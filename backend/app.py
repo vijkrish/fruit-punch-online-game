@@ -1,11 +1,20 @@
+from typing import List
+
+from backend.utils.initialize_cards import Card, setup_game
+from backend.utils.player import initialize_players, Player
 from flask import Flask, jsonify
 
 app = Flask(__name__)
+
+cards: List[Card] = setup_game()
+players: List[Player] = []
 
 
 @app.route("/init/<int:num_players>", methods=["GET"])
 def init_game(num_players):
     # Logic to initialize the game with the given number of players
+    global players
+    players = initialize_players(num_players=num_players, cards=cards)
     return jsonify({"message": f"Game initialized with {num_players} players"}), 200
 
 
