@@ -8,16 +8,22 @@ class Player:
         self.name = name
         self.pile_of_cards = []  # This will hold Card objects
         self.is_turn = False
+        self.top_card = None
 
     def collect_cards(self, cards: List[Card]):
         """Add the collected cards to the player's bottom of the pile."""
         self.pile_of_cards = cards + self.pile_of_cards
 
     def flip_card(self) -> Card:
-        """Remove the top card from the player's pile."""
+        """flips the top card from the player's pile."""
         if self.pile_of_cards:
-            return self.pile_of_cards.pop()
+            self.top_card = self.pile_of_cards.pop(0)
+            return self.top_card
         raise Exception("No cards left to flip")
+
+    def get_top_card(self) -> Card:
+        """Return the top card from the player's pile."""
+        return self.top_card
 
     def set_turn(self, is_turn):
         """Set the player's turn status."""
