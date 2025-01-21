@@ -11,3 +11,11 @@ Fruit Punch is a speed action game inspired by Halli Galli, where players watch 
 5. If a player incorrectly hits the bell, they must give one card to each other player.
 6. The game continues until only two players are left, at which point the game ends after one more round.
 7. *The player with the most cards at the end of the game wins.*
+
+---------------
+## Installation
+### How to start the react app
+```
+cd frontend-react-app
+npm run dev
+```
