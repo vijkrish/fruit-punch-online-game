@@ -1,26 +1,17 @@
 // src/components/Card.js
 import React from 'react';
+import '../css/Card.css'; // Import the CSS file
+
 
 const Card = ({ fruit, quantity, isEmpty }) => {
     fruit = fruit.toLowerCase();
 
     const styles = {
-      card: {
-        width: '200px',
-        height: '300px',
-        border: '1px solid black',
-        borderRadius: '10px',
-        position: 'relative',
-        backgroundColor: isEmpty ? 'grey' : 'white', // Set background color based on isEmpty
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-      image: {
-        width: '50px',
-        height: '50px',
-        position: 'absolute',
-      },
+        image: {
+            width: '20%', // Use percentage for image size
+            height: 'auto', // Maintain aspect ratio
+            position: 'absolute',
+        },
     };
 
     const getImageStyles = (index) => {
