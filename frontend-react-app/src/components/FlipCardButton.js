@@ -13,7 +13,7 @@ const FlipCardButton = () => {
     <button onClick={handleFlipCardClick} style={{
       padding: '20px',
       fontSize: '24px',
-      width: '100%',
+      width: '50%',
       backgroundColor: '#4CAF50',
       color: '#fff',
       border: 'none',
