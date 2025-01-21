@@ -11,7 +11,7 @@ class Card:
 
 
 def initialize_cards():
-    fruits = ["Banana", "Lime", "Pear", "Grape"]
+    fruits = ["Banana", "Lime", "Strawberry", "Grape"]
     cards = []
 
     for fruit in fruits:
