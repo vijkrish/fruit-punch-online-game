@@ -6,10 +6,9 @@ import BuzzerButton from '../components/BuzzerButton';
 
 const HomePage = () => {
   const players = [
-    { name: 'Player 1', hand: [{ fruit: 'Lime', quantity: 3 }] },
-    { name: 'Player 2', hand: [{ fruit: 'Banana', quantity: 2 }] },
-    { name: 'Player 3', hand: [{ fruit: 'Strawberry', quantity: 1 }] },
-    { name: 'Player 4', hand: [{ fruit: 'Grape', quantity: 5 }] },
+    { name: 'Player 1', hand: { fruit: 'Lime', quantity: 3 } },
+    { name: 'Player 2', hand: { fruit: 'Banana', quantity: 4 } },
+    { name: 'Player 3', hand: { } },
   ];
 
   return (
@@ -29,7 +28,7 @@ const HomePage = () => {
       {players.map((player, index) => (
         <div key={index} style={{ textAlign: 'center' }}>
           <h2>{player.name}</h2>
-          <Card fruit={player.hand[0].fruit} quantity={player.hand[0].quantity} />
+          <Card fruit={player.hand.fruit || ''} quantity={player.hand.quantity || 0} isEmpty={!player.hand.fruit} />
         </div>
       ))}
       <div style={{
