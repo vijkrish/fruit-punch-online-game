@@ -1,22 +1,17 @@
 // src/components/Card.js
 import React from 'react';
+import '../css/Card.css'; // Import the CSS file
 
-const Card = ({ fruit, quantity }) => {
+
+const Card = ({ fruit, quantity, isEmpty }) => {
     fruit = fruit.toLowerCase();
 
     const styles = {
-      card: {
-        width: '200px',
-        height: '300px',
-        border: '1px solid black',
-        borderRadius: '10px',
-        position: 'relative',
-      },
-      image: {
-        width: '50px',
-        height: '50px',
-        position: 'absolute',
-      },
+        image: {
+            width: '20%', // Use percentage for image size
+            height: 'auto', // Maintain aspect ratio
+            position: 'absolute',
+        },
     };
 
     const getImageStyles = (index) => {
@@ -48,11 +43,11 @@ const Card = ({ fruit, quantity }) => {
 
     return (
       <div className="card" style={styles.card}>
-        {Array.from({ length: quantity }).map((_, index) => (
+        {!isEmpty && Array.from({ length: quantity }).map((_, index) => (
           <img key={index} src={`images/${fruit}.jpg`} alt={fruit} style={{ ...styles.image, ...getImageStyles(index) }} />
         ))}
       </div>
     );
-  };
+};
 
 export default Card;

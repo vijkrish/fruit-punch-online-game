@@ -1,0 +1,18 @@
+.card {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    aspect-ratio: 3 / 4;
+    border: 1px solid black;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .card {
+        max-width: 300px; /* Increase max width for larger screens */
+    }
+}
