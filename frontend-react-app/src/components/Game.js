@@ -7,6 +7,8 @@ import FlipCardButton from './FlipCardButton';
 import BuzzerButton from './BuzzerButton';
 
 const GamePage = () => {
+  const [currentPlayerId, setCurrentPlayerId] = useState(0);
+
   const [players, setPlayers] = useState([
     { id: 0, name: 'Player 1', hand: { fruit: 'Lime', quantity: 3 } },
     { id: 1, name: 'Player 2', hand: { fruit: 'Banana', quantity: 4 } },
@@ -28,14 +30,16 @@ const GamePage = () => {
     initializeGame();
   }, []);
 
-  const handleCardFlipped = (playerId, fruit, quantity) => {
+  const handleCardFlipped = (fruit, quantity, nextPlayer) => {
     setPlayers((prevPlayers) =>
       prevPlayers.map((player) =>
-        player.id === playerId
+        player.id === currentPlayerId
           ? { ...player, hand: { fruit, quantity: parseInt(quantity, 10) } }
           : player
       )
     );
+
+    setCurrentPlayerId(nextPlayer);
   };
 
   return (
@@ -72,7 +76,7 @@ const GamePage = () => {
         gap: '20px',
         borderTop: '1px solid #ccc', // Optional: adds a border to separate the buttons from the grid
       }}>
-        <FlipCardButton />
+        <FlipCardButton playerId={currentPlayerId} onCardFlipped={handleCardFlipped} />
         <BuzzerButton />
       </div>
     </div>
