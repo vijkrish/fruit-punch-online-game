@@ -1,12 +1,14 @@
 from typing import List
 
 from flask import Flask, jsonify
+from flask_cors import CORS  # Import CORS
 
 from utils.card import Card, setup_game
 from utils.pile import Pile
 from utils.player import initialize_players, Player
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 cards: List[Card] = setup_game()
 players: List[Player] = []
@@ -27,20 +29,9 @@ def init_game(num_players):
     global players, pile
     players = initialize_players(num_players=num_players, cards=cards)
     pile = Pile()
-    # Set the first player's turn to True
     if players:
-        for i, player in enumerate(players):
-            player.set_turn(i == 0)
-            if player.is_turn:
-                return (
-                    jsonify(
-                        {
-                            "message": f"Game initialized with {num_players} players",
-                            "current_turn": i,
-                        }
-                    ),
-                    200,
-                )
+        players[0].set_turn(True)
+
     return jsonify({"message": f"Game initialized with {num_players} players"}), 200
 
 
