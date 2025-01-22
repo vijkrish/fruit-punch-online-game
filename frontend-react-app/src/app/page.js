@@ -1,15 +1,27 @@
 // src/app/page.js
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Card from '../components/Card';
 import FlipCardButton from '../components/FlipCardButton';
 import BuzzerButton from '../components/BuzzerButton';
 
 const HomePage = () => {
-  const players = [
-    { name: 'Player 1', hand: { fruit: 'Lime', quantity: 3 } },
-    { name: 'Player 2', hand: { fruit: 'Banana', quantity: 4 } },
-    { name: 'Player 3', hand: { } },
-  ];
+  const [players, setPlayers] = useState([
+    { id: 0, name: 'Player 1', hand: { fruit: 'Lime', quantity: 3 } },
+    { id: 1, name: 'Player 2', hand: { fruit: 'Banana', quantity: 4 } },
+    { id: 2, name: 'Player 3', hand: { fruit: '', quantity: 0 } },
+  ]);
+
+  const handleCardFlipped = (playerId, fruit, quantity) => {
+    setPlayers((prevPlayers) =>
+      prevPlayers.map((player) =>
+        player.id === playerId
+          ? { ...player, hand: { fruit, quantity: parseInt(quantity, 10) } }
+          : player
+      )
+    );
+  };
 
   return (
     <div style={{
@@ -31,10 +43,11 @@ const HomePage = () => {
           gridTemplateColumns: 'repeat(3, 1fr)',
         },
       }}>
-        {players.map((player, index) => (
-          <div key={index} style={{ textAlign: 'center' }}>
+        {players.map((player) => (
+          <div key={player.id} style={{ textAlign: 'center' }}>
             <h2>{player.name}</h2>
-            <Card fruit={player.hand.fruit || ''} quantity={player.hand.quantity || 0} isEmpty={!player.hand.fruit} />
+            <Card fruit={player.hand.fruit} quantity={player.hand.quantity} isEmpty={!player.hand.fruit} />
+            <FlipCardButton playerId={player.id} onCardFlipped={(fruit, quantity) => handleCardFlipped(player.id, fruit, quantity)} />
           </div>
         ))}
       </div>
