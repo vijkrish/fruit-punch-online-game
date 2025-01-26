@@ -7,6 +7,7 @@ const useGameState = (onGameStateUpdate) => {
 
   useEffect(() => {
     // Fetch the game state from the server every second
+    console.log('Fetching game state...');
     const fetchGameState = async () => {
       try {
         const response = await fetch('http://127.0.0.1:5000/state', {
@@ -25,10 +26,10 @@ const useGameState = (onGameStateUpdate) => {
     };
 
     fetchGameState(); // Initial fetch
-    const intervalId = setInterval(fetchGameState, 10000); // Fetch every 10 second
+    const intervalId = setInterval(fetchGameState, 1000); // Fetch every second
 
     return () => clearInterval(intervalId); // Cleanup on unmount
-  }, [onGameStateUpdate]);
+  }, []);
 };
 
 export default useGameState;

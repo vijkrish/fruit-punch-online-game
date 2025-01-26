@@ -8,12 +8,14 @@ from utils.pile import Pile
 from utils.player import initialize_players, Player
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)  # Enable CORS qfor all routes
 
 cards: List[Card] = setup_game()
 players: List[Player] = []
 current_player_index = 0
 pile: Pile = Pile()
+
+print("Everything is ready to go!")
 
 
 def set_next_player_turn():
@@ -31,11 +33,14 @@ def set_next_player_turn():
 @app.route("/init/<int:num_players>", methods=["GET"])
 def init_game(num_players):
     # Logic to initialize the game with the given number of players
-    global players
+    global players, cards
     players = initialize_players(num_players=num_players, cards=cards)
     if players:
         players[0].set_turn(True)
 
+    print("Game initialized with players: ")
+    print(players)
+    print("========================")
     return jsonify({"message": f"Game initialized with {num_players} players"}), 200
 
 
@@ -105,6 +110,7 @@ def flip_card(player_id):
 @app.route("/state", methods=["GET"])
 def get_game_state():
     global players, pile, current_player_index
+    print(players, pile, current_player_index)
     player_states = [
         {
             "player_id": i,
@@ -120,6 +126,7 @@ def get_game_state():
 
     num_cards_in_pile = pile.get_num_cards()
 
+    print(player_states)
     return (
         jsonify(
             {
