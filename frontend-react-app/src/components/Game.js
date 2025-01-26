@@ -34,7 +34,7 @@ const GamePage = () => {
   useEffect(() => {
     const initializeGame = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/init/4', {
+        const response = await fetch('http://127.0.0.1:5000/init/2', {
           method: 'GET',
         });
         if (!response.ok) {
