@@ -8,11 +8,7 @@ import BuzzerButton from './BuzzerButton';
 import useGameState from '../hooks/useGameState';
 
 const GamePage = () => {
-    const gameState = useGameState();
-
-    if (!gameState) {
-      return <div>Loading...</div>;
-    }
+  const gameState = useGameState();
 
   const [currentPlayerId, setCurrentPlayerId] = useState(0);
 
@@ -48,6 +44,10 @@ const GamePage = () => {
 
     setCurrentPlayerId(nextPlayer);
   };
+
+  if (!gameState) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div style={{
