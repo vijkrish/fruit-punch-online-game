@@ -24,8 +24,12 @@ class Player:
     def get_top_card(self) -> Card:
         """Return the top card from the player's pile."""
         if not self.top_card:
-            raise Exception("No top card to get")
+            return Card(fruit="", number=0)
         return self.top_card
+
+    def get_num_cards_on_hand(self) -> int:
+        """Return the number of cards the player has."""
+        return len(self.pile_of_cards)
 
     def set_turn(self, is_turn):
         """Set the player's turn status."""

@@ -120,13 +120,13 @@ def get_game_state():
                     player.get_top_card().number if player.get_top_card() else 0
                 ),
             },
+            "num_cards": player.get_num_cards_on_hand(),
         }
         for i, player in enumerate(players)
     ]
 
     num_cards_in_pile = pile.get_num_cards()
 
-    print(player_states)
     return (
         jsonify(
             {

@@ -24,6 +24,7 @@ const GamePage = () => {
         fruit: player.top_card.fruit,
         quantity: player.top_card.quantity,
       },
+      num_cards: player.num_cards,
     })));
     setCurrentPlayerId(newGameState.current_player_id);
   };
@@ -33,7 +34,7 @@ const GamePage = () => {
   useEffect(() => {
     const initializeGame = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/init/2', {
+        const response = await fetch('http://127.0.0.1:5000/init/4', {
           method: 'GET',
         });
         if (!response.ok) {
