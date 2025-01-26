@@ -2,17 +2,19 @@
 import React from 'react';
 import Card from './Card';
 
-const Player = ({ name, hand }) => {
+const Player = ({ player, currentPlayerId }) => {
   return (
-    <div className="player">
-      <h1>{name}</h1>
-      <ul>
-        {hand.map((card, index) => (
-          <li key={index}>
-            <Card fruit={card.fruit} quantity={card.quantity} />
-          </li>
-        ))}
-      </ul>
+    <div key={player.id} style={{ textAlign: 'center' }}>
+      <h2 style={{
+        color: currentPlayerId === player.id ? 'red' : 'black',
+        fontWeight: currentPlayerId === player.id ? 'bold' : 'normal',
+        backgroundColor: currentPlayerId === player.id ? 'yellow' : 'transparent',
+        padding: '5px',
+        borderRadius: '5px'
+      }}>
+        {player.name}
+      </h2>
+      <Card fruit={player.hand.fruit} quantity={player.hand.quantity} isEmpty={!player.hand.fruit} />
     </div>
   );
 };

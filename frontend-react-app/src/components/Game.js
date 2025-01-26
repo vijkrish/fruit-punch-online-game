@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Card from './Card';
+import Player from './Player';
 import FlipCardButton from './FlipCardButton';
 import BuzzerButton from './BuzzerButton';
 import useGameState from '../hooks/useGameState';
@@ -68,10 +69,7 @@ const GamePage = () => {
         },
       }}>
         {players.map((player) => (
-          <div key={player.id} style={{ textAlign: 'center' }}>
-            <h2>{player.name}</h2>
-            <Card fruit={player.hand.fruit} quantity={player.hand.quantity} isEmpty={!player.hand.fruit} />
-          </div>
+          <Player player={player} currentPlayerId={currentPlayerId} />
         ))}
       </div>
       <div style={{
