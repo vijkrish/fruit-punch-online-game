@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-const FlipCardButton = ({ playerId, onCardFlipped }) => {
+const FlipCardButton = ({ playerId }) => {
     const handleFlipCard = async () => {
         try {
           const response = await fetch(`http://127.0.0.1:5000/flip-card/${playerId}`, {
@@ -12,7 +12,6 @@ const FlipCardButton = ({ playerId, onCardFlipped }) => {
           const data = await response.json();
           if (response.ok) {
             console.log('Card flipped:', data);
-            onCardFlipped(data.top_card_fruit, data.top_card_quantity, data.next_turn); // Pass the card data to the parent component
           } else {
             console.error(data.error);
           }

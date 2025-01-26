@@ -15,6 +15,7 @@ players: List[Player] = []
 current_player_index = 0
 pile: Pile = Pile()
 
+
 def set_next_player_turn():
     global players, current_player_index
     players[current_player_index].set_turn(False)
@@ -100,6 +101,7 @@ def flip_card(player_id):
     else:
         return jsonify({"error": "Invalid player ID"}), 400
 
+
 @app.route("/state", methods=["GET"])
 def get_game_state():
     global players, pile, current_player_index
@@ -108,21 +110,26 @@ def get_game_state():
             "player_id": i,
             "top_card": {
                 "fruit": player.get_top_card().fruit if player.get_top_card() else "",
-                "quantity": player.get_top_card().number if player.get_top_card() else 0,
-            }
+                "quantity": (
+                    player.get_top_card().number if player.get_top_card() else 0
+                ),
+            },
         }
         for i, player in enumerate(players)
     ]
 
     num_cards_in_pile = pile.get_num_cards()
 
-    return jsonify(
-        {
-            "current_player_id": current_player_index,
-            "players": player_states,
-            "num_cards_in_pile": num_cards_in_pile,
-        }
-    ), 200
+    return (
+        jsonify(
+            {
+                "current_player_id": current_player_index,
+                "players": player_states,
+                "num_cards_in_pile": num_cards_in_pile,
+            }
+        ),
+        200,
+    )
 
 
 @app.route("/", methods=["GET"])
