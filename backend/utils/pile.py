@@ -2,6 +2,9 @@ class Pile:
     def __init__(self):
         self.played_cards = []
     
+    def get_num_cards(self):
+        return len(self.played_cards)
+
     def play_card(self, card):
         self.played_cards.append(card)
     

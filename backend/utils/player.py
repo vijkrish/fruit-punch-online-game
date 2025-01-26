@@ -1,6 +1,6 @@
 from typing import List
 
-from card import Card
+from utils.card import Card
 
 
 class Player:
@@ -17,7 +17,7 @@ class Player:
     def flip_card(self) -> Card:
         """flips the top card from the player's pile."""
         if self.pile_of_cards:
-            self.top_card = self.pile_of_cards.pop(0)
+            self.top_card = self.pile_of_cards.pop()
             return self.top_card
         raise Exception("No cards left to flip")
 

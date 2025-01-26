@@ -3,14 +3,26 @@
 
 import React from 'react';
 
-const FlipCardButton = () => {
-  const handleFlipCardClick = () => {
-    // Add logic to handle flip card click event
-    console.log('Flip Card button clicked!');
-  };
+const FlipCardButton = ({ playerId, onCardFlipped }) => {
+    const handleFlipCard = async () => {
+        try {
+          const response = await fetch(`http://127.0.0.1:5000/flip-card/${playerId}`, {
+            method: 'GET',
+          });
+          const data = await response.json();
+          if (response.ok) {
+            console.log('Card flipped:', data);
+            onCardFlipped(data.top_card_fruit, data.top_card_quantity, data.next_turn); // Pass the card data to the parent component
+          } else {
+            console.error(data.error);
+          }
+        } catch (error) {
+          console.error('Error flipping card:', error);
+        }
+    };
 
   return (
-    <button onClick={handleFlipCardClick} style={{
+    <button onClick={handleFlipCard} style={{
       padding: '20px',
       fontSize: '24px',
       width: '50%',
