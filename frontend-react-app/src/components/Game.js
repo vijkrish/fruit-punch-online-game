@@ -8,8 +8,6 @@ import BuzzerButton from './BuzzerButton';
 import useGameState from '../hooks/useGameState';
 
 const GamePage = () => {
-  const gameState = useGameState();
-
   const [currentPlayerId, setCurrentPlayerId] = useState(0);
 
   const [players, setPlayers] = useState([
@@ -17,10 +15,26 @@ const GamePage = () => {
     { id: 1, name: 'Player 2', hand: { fruit: 'Banana', quantity: 4 } },
   ]);
 
+  const renderGameState = (newGameState) => {
+    setPlayers(newGameState.players.map(player => ({
+      id: player.player_id,
+      name: `Player ${player.player_id + 1}`,
+      hand: {
+        fruit: player.top_card.fruit,
+        quantity: player.top_card.quantity,
+      },
+    })));
+    setCurrentPlayerId(newGameState.current_player_id);
+  };
+
+  useGameState(renderGameState);
+
   useEffect(() => {
     const initializeGame = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/init/2');
+        const response = await fetch('http://127.0.0.1:5000/init/2', {
+          method: 'GET',
+        });
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -32,22 +46,6 @@ const GamePage = () => {
 
     initializeGame();
   }, []);
-
-  const handleCardFlipped = (fruit, quantity, nextPlayer) => {
-    setPlayers((prevPlayers) =>
-      prevPlayers.map((player) =>
-        player.id === currentPlayerId
-          ? { ...player, hand: { fruit, quantity: parseInt(quantity, 10) } }
-          : player
-      )
-    );
-
-    setCurrentPlayerId(nextPlayer);
-  };
-
-  if (!gameState) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div style={{
@@ -83,7 +81,7 @@ const GamePage = () => {
         gap: '20px',
         borderTop: '1px solid #ccc', // Optional: adds a border to separate the buttons from the grid
       }}>
-        <FlipCardButton playerId={currentPlayerId} onCardFlipped={handleCardFlipped} />
+        <FlipCardButton playerId={currentPlayerId} />
         <BuzzerButton />
       </div>
     </div>
