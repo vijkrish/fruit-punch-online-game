@@ -19,7 +19,6 @@ const BuzzerButton = () => {
       border: 'none',
       borderRadius: '5px',
       cursor: 'pointer',
-      flex: '3',
     }}>
       <img src="images/buzzer.jpg" alt="Buzzer" style={{ width: '50px', height: '50px' }} />
     </button>

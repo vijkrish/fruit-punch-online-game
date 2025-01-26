@@ -12,23 +12,26 @@ CORS(app)  # Enable CORS for all routes
 
 cards: List[Card] = setup_game()
 players: List[Player] = []
-
+current_player_index = 0
+pile: Pile = Pile()
 
 def set_next_player_turn():
-    global players
-    current_player_index = next(i for i, player in enumerate(players) if player.is_turn)
+    global players, current_player_index
     players[current_player_index].set_turn(False)
     next_player_index = (current_player_index + 1) % len(players)
     players[next_player_index].set_turn(True)
+
+    # Update the current player id
+    current_player_index = next_player_index
+
     return next_player_index
 
 
 @app.route("/init/<int:num_players>", methods=["GET"])
 def init_game(num_players):
     # Logic to initialize the game with the given number of players
-    global players, pile
+    global players
     players = initialize_players(num_players=num_players, cards=cards)
-    pile = Pile()
     if players:
         players[0].set_turn(True)
 
@@ -96,6 +99,30 @@ def flip_card(player_id):
             return jsonify({"error": "It's not this player's turn"}), 400
     else:
         return jsonify({"error": "Invalid player ID"}), 400
+
+@app.route("/state", methods=["GET"])
+def get_game_state():
+    global players, pile, current_player_index
+    player_states = [
+        {
+            "player_id": i,
+            "top_card": {
+                "fruit": player.get_top_card().fruit if player.get_top_card() else "",
+                "quantity": player.get_top_card().number if player.get_top_card() else 0,
+            }
+        }
+        for i, player in enumerate(players)
+    ]
+
+    num_cards_in_pile = pile.get_num_cards()
+
+    return jsonify(
+        {
+            "current_player_id": current_player_index,
+            "players": player_states,
+            "num_cards_in_pile": num_cards_in_pile,
+        }
+    ), 200
 
 
 @app.route("/", methods=["GET"])

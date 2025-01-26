@@ -5,8 +5,15 @@ import React, { useState, useEffect } from 'react';
 import Card from './Card';
 import FlipCardButton from './FlipCardButton';
 import BuzzerButton from './BuzzerButton';
+import useGameState from '../hooks/useGameState';
 
 const GamePage = () => {
+    const gameState = useGameState();
+
+    if (!gameState) {
+      return <div>Loading...</div>;
+    }
+
   const [currentPlayerId, setCurrentPlayerId] = useState(0);
 
   const [players, setPlayers] = useState([
