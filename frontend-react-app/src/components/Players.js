@@ -16,6 +16,18 @@ const Players = ({ players, currentPlayerId }) => {
         {player.name}
       </h2>
       <Card fruit={player.hand.fruit} quantity={player.hand.quantity} isEmpty={!player.hand.fruit} />
+      <div style={{
+        marginTop: '10px',
+        padding: '10px',
+        backgroundColor: '#f0f0f0',
+        borderRadius: '5px',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        fontSize: '16px',
+        color: '#333'
+      }}>
+        <strong>Score:</strong> {player.num_cards}
+      </div>
+
     </div>
   );
 
