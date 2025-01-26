@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Card from './Card';
-import Player from './Player';
+import Players from './Players';
 import FlipCardButton from './FlipCardButton';
 import BuzzerButton from './BuzzerButton';
 import useGameState from '../hooks/useGameState';
@@ -54,24 +54,7 @@ const GamePage = () => {
       flexDirection: 'column',
       minHeight: '100vh', // Ensures the container takes the full height of the viewport
     }}>
-      <div style={{
-        flex: '1', // Allows the player grid to take up available space
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(170px, 1fr))',
-        gap: '10px',
-        justifyContent: 'center',
-        alignItems: 'center',
-        '@media (minWidth: 768px)': {
-          gridTemplateColumns: 'repeat(2, 1fr)',
-        },
-        '@media (minWidth: 1024px)': {
-          gridTemplateColumns: 'repeat(3, 1fr)',
-        },
-      }}>
-        {players.map((player) => (
-          <Player player={player} currentPlayerId={currentPlayerId} />
-        ))}
-      </div>
+      <Players players={players} currentPlayerId={currentPlayerId} />
       <div style={{
         padding: '20px',
         display: 'flex',
