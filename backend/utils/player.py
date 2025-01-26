@@ -23,6 +23,8 @@ class Player:
 
     def get_top_card(self) -> Card:
         """Return the top card from the player's pile."""
+        if not self.top_card:
+            raise Exception("No top card to get")
         return self.top_card
 
     def set_turn(self, is_turn):
