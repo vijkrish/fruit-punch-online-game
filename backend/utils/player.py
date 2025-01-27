@@ -13,6 +13,7 @@ class Player:
     def collect_cards(self, cards: List[Card]):
         """Add the collected cards to the player's bottom of the pile."""
         self.pile_of_cards = cards + self.pile_of_cards
+        self.flip_card()
 
     def flip_card(self) -> Card:
         """flips the top card from the player's pile."""

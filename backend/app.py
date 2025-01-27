@@ -57,21 +57,51 @@ def hit_bell(player_id):
             winning_player = players[player_id]
             collected_cards = pile.collect_cards()
             winning_player.collect_cards(collected_cards)
+            pile.clear()
+
+            # Check if any player has 0 cards
+            for i, player in enumerate(players):
+                if len(player.pile_of_cards) == 0:
+                    return jsonify({
+                        "message": f"Player {i} has lost the game! Player {1-i} wins!",
+                        "winner": 1-i,
+                        "loser": i,
+                        "game_over": True
+                    }), 200
 
             return (
                 jsonify(
                     {
                         "message": f"Player {player_id} hit the bell and won the round!",
                         "collected_cards": [str(card) for card in collected_cards],
+                        "cards_collected_count": len(collected_cards)
                     }
                 ),
                 200,
             )
         else:
-            return (
-                jsonify({"message": "Bell hit incorrectly. No cards collected."}),
-                200,
-            )
+            incorrect_player = players[player_id]
+            other_player = players[1 - player_id]  # Assumes 2 players, alternates between 0 and 1
+            
+            if incorrect_player.pile_of_cards:
+                penalty_card = incorrect_player.pile_of_cards.pop()
+                other_player.collect_cards([penalty_card])
+                #pile.add_card(penalty_card)
+            
+            return jsonify({
+                "message": "Bell hit incorrectly. Penalty applied.",
+                "penalty": {
+                    "incorrect_player": player_id,
+                    "cards_lost": 1,
+                    "remaining_cards": len(incorrect_player.pile_of_cards)
+                },
+                "reward": {
+                    "rewarded_player": 1 - player_id,
+                    "cards_gained": 1,
+                    "total_cards": len(other_player.pile_of_cards)
+                },
+            }), 200
+
     else:
         return jsonify({"error": "Invalid player ID"}), 400
 

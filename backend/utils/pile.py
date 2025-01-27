@@ -11,6 +11,9 @@ class Pile:
     def collect_cards(self):
         return self.played_cards
 
+    def clear(self):
+        self.played_cards = []
+
     def check_bell_hit(self, all_player_top_cards):
         fruit_counts = {}
         for card in all_player_top_cards:
