@@ -64,7 +64,7 @@ const GamePage = () => {
         borderTop: '1px solid #ccc', // Optional: adds a border to separate the buttons from the grid
       }}>
         <FlipCardButton playerId={currentPlayerId} />
-        <BuzzerButton />
+        <BuzzerButton playerId={currentPlayerId} />
       </div>
     </div>
   );
