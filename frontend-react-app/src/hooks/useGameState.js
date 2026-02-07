@@ -1,7 +1,7 @@
 // src/hooks/useGameState.js
 import { useState, useEffect } from 'react';
 
-const useGameState = (onGameStateUpdate) => {
+const useGameState = (onGameStateUpdate, isGameStarted, sessionId) => {
   // onGameStateUpdate is a callback function that will be called with the new game state
   // It is responsible for updating the UI with the new game state
 
@@ -10,7 +10,7 @@ const useGameState = (onGameStateUpdate) => {
     console.log('Fetching game state...');
     const fetchGameState = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/state', {
+        const response = await fetch(`http://10.0.0.179:5001/state/${sessionId}`, {
           method: 'GET',
         });
         const data = await response.json();
@@ -25,11 +25,13 @@ const useGameState = (onGameStateUpdate) => {
       }
     };
 
-    fetchGameState(); // Initial fetch
-    const intervalId = setInterval(fetchGameState, 1000); // Fetch every second
+    if (isGameStarted && sessionId) {
+      fetchGameState(); // Initial fetch
+      const intervalId = setInterval(fetchGameState, 1000); // Fetch every second
+      return () => clearInterval(intervalId); // Cleanup on unmount
+    }
 
-    return () => clearInterval(intervalId); // Cleanup on unmount
-  }, []);
+  }, [isGameStarted, sessionId]);
 };
 
 export default useGameState;

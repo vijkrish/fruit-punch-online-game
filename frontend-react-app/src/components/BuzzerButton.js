@@ -3,24 +3,16 @@
 
 import React from 'react';
 
-const BuzzerButton = ({ playerId }) => {
-  const handleBuzzerClick = async () => {
-    try {
-      const response = await fetch(`http://127.0.0.1:5000/hit-bell/${playerId}`, {
-        method: 'GET',
+const BuzzerButton = ({ playerId, sessionId }) => {
+  const handleBuzzerClick = () => {
+    fetch(`http://10.0.0.179:5001/hit-bell/${sessionId}/${playerId}`)
+      .then(response => response.json())
+      .then(data => {
+        alert(data.message);
+      })
+      .catch(error => {
+        console.error('Error hitting buzzer:', error);
       });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        console.log('Bell hit:', data);
-        // Add any additional logic you want to perform on successful bell hit
-      } else {
-        console.error(data.error);
-      }
-    } catch (error) {
-      console.error('Error hitting bell:', error);
-    }
   };
 
   return (

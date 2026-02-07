@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-const FlipCardButton = ({ playerId }) => {
+const FlipCardButton = ({ playerId, sessionId, isMyTurn }) => {
     const handleFlipCard = async () => {
         try {
-          const response = await fetch(`http://127.0.0.1:5000/flip-card/${playerId}`, {
+          const response = await fetch(`http://10.0.0.179:5001/flip-card/${sessionId}/${playerId}`, {
             method: 'GET',
           });
           const data = await response.json();
@@ -21,17 +21,21 @@ const FlipCardButton = ({ playerId }) => {
     };
 
   return (
-    <button onClick={handleFlipCard} style={{
-      padding: '20px',
-      fontSize: '24px',
-      width: '50%',
-      backgroundColor: '#4CAF50',
-      color: '#fff',
-      border: 'none',
-      borderRadius: '5px',
-      cursor: 'pointer',
-    }}>
-      Flip Card
+    <button
+      onClick={handleFlipCard}
+      disabled={!isMyTurn}
+      style={{
+        padding: '20px',
+        fontSize: '24px',
+        width: '50%',
+        backgroundColor: isMyTurn ? '#4CAF50' : '#9E9E9E',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '5px',
+        cursor: isMyTurn ? 'pointer' : 'not-allowed',
+        opacity: isMyTurn ? 1 : 0.7,
+      }}>
+      {isMyTurn ? 'Flip Card' : "Opponent's Turn"}
     </button>
   );
 };
