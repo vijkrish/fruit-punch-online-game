@@ -3,10 +3,16 @@
 
 import React from 'react';
 
-const BuzzerButton = () => {
+const BuzzerButton = ({ playerId, sessionId }) => {
   const handleBuzzerClick = () => {
-    // Add logic to handle buzzer click event
-    console.log('Buzzer button clicked!');
+    fetch(`http://10.0.0.179:5001/hit-bell/${sessionId}/${playerId}`)
+      .then(response => response.json())
+      .then(data => {
+        alert(data.message);
+      })
+      .catch(error => {
+        console.error('Error hitting buzzer:', error);
+      });
   };
 
   return (

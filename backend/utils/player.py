@@ -39,11 +39,17 @@ class Player:
         return f"Player(name={self.name}, is_turn={self.is_turn}, pile_size={len(self.pile_of_cards)})"
 
 
-def initialize_players(num_players, cards: List[Card]):
+def initialize_players(num_players, cards: List[Card], existing_players=None):
     """Initialize the players and distributes the given number of cards."""
     players = []
     for i in range(num_players):
-        player = Player(f"Player {i+1}")
+        if existing_players and i < len(existing_players):
+            player = existing_players[i]
+            player.pile_of_cards = []
+            player.top_card = None
+            player.is_turn = False
+        else:
+            player = Player(f"Player {i+1}")
         player.collect_cards(cards[i::num_players])
         players.append(player)
     return players

@@ -9,7 +9,9 @@ class Pile:
         self.played_cards.append(card)
     
     def collect_cards(self):
-        return self.played_cards
+        cards = self.played_cards[:]
+        self.played_cards = []
+        return cards
 
     def check_bell_hit(self, all_player_top_cards):
         fruit_counts = {}
@@ -18,6 +20,4 @@ class Pile:
                 fruit_counts[card.fruit] += card.number
             else:
                 fruit_counts[card.fruit] = card.number
-            if fruit_counts[card.fruit] == 5:
-                return True
-        return False
+        return any(count == 5 for count in fruit_counts.values())
